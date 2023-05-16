@@ -4,7 +4,6 @@ export class Button extends Component {
   state = {
     page: 1,
   };
-  handleButtonClick = () => {};
   render() {
     return (
       <button onClick={this.props.onClick} type="button" className="Button">
