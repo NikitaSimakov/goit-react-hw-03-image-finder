@@ -14,9 +14,7 @@ export class App extends Component  {
     isLoading: false,
   }
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.value !== this.state.value) {
-      this.setState({page: 1})     
-    }   
+    if (prevState.value !== this.state.value) this.setState({page: 1})
   }
   handleButtonClick = () => {
     this.setState(prevState => {
@@ -24,13 +22,10 @@ export class App extends Component  {
     })
 
   }
-  handleFormSubmit = (value) => {
-    this.setState({value})
-  }
+  handleFormSubmit = (value) => this.setState({value})
 
-  handleShowModalToggle = () => {
-    this.setState(({showModal}) => ({showModal: !showModal}))
-  }
+  handleShowModalToggle = () => this.setState(({showModal}) => ({showModal: !showModal}))
+  
   handleGetLargeImg = (link) => {
 this.setState({largeImg: link})
 this.handleShowModalToggle();
@@ -39,7 +34,6 @@ this.handleShowModalToggle();
     this.setState(prevState => {
       return {isLoading: !prevState.isLoading}
     })
-    console.log(this.state.isLoading)
   }
   render () {
     const {page, value, largeImg, showModal, isLoading} = this.state;

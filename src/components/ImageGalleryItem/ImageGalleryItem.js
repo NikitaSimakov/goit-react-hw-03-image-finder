@@ -6,22 +6,32 @@ export class ImageGalleryItem extends Component {
   };
 
   render() {
-    // const { gallery: galleryItems } = this.props.gallery;
     const { gallery, getLargeImg } = this.props;
-    return gallery?.map(item => (
+    return gallery?.map(({ id, largeImageURL, webformatURL, tags }) => (
       <li
         className="ImageGalleryItem"
-        key={item.id}
+        key={id}
         onClick={() => {
-          getLargeImg(item.largeImageURL);
+          getLargeImg(largeImageURL);
         }}
       >
-        <img
-          src={item.webformatURL}
-          alt={item.tags}
-          className="ImageGalleryItem-image"
-        />
+        <img src={webformatURL} alt={tags} className="ImageGalleryItem-image" />
       </li>
     ));
+    // return gallery?.map(item => (
+    //   <li
+    //     className="ImageGalleryItem"
+    //     key={item.id}
+    //     onClick={() => {
+    //       getLargeImg(item.largeImageURL);
+    //     }}
+    //   >
+    //     <img
+    //       src={item.webformatURL}
+    //       alt={item.tags}
+    //       className="ImageGalleryItem-image"
+    //     />
+    //   </li>
+    // ));
   }
 }

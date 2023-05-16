@@ -1,12 +1,10 @@
 import { Component } from 'react';
 
 export class Button extends Component {
-  state = {
-    page: 1,
-  };
   render() {
+    const { onClick } = this.props;
     return (
-      <button onClick={this.props.onClick} type="button" className="Button">
+      <button onClick={onClick} type="button" className="Button">
         Load more
       </button>
     );

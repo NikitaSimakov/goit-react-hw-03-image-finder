@@ -6,28 +6,27 @@ export class ImageGallery extends Component {
   state = {
     gallery: [],
     page: 1,
-    // isLoading: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { searchQuery, page } = this.props;
-    if (prevProps.searchQuery !== this.props.searchQuery) {
+    const { searchQuery, page, isLoading } = this.props;
+    if (prevProps.searchQuery !== searchQuery) {
       this.setState({ gallery: [] });
-      this.props.isLoading();
+      isLoading();
       getSearchImages(searchQuery, page)
         .then(gallery => this.setState({ gallery: gallery.hits }))
-        .finally(() => this.props.isLoading());
+        .finally(() => isLoading());
       this.handlePageUpdate();
     }
-    if (prevProps.page !== this.props.page) {
-      this.props.isLoading();
+    if (prevProps.page !== page) {
+      isLoading();
       getSearchImages(searchQuery, page)
         .then(gallery =>
           this.setState(prevState => {
             return { gallery: [...prevState.gallery, ...gallery.hits] };
           })
         )
-        .finally(() => this.props.isLoading());
+        .finally(() => isLoading());
       this.handlePageUpdate();
     }
   }
@@ -35,12 +34,10 @@ export class ImageGallery extends Component {
 
   render() {
     const { gallery } = this.state;
+    const { getLargeImg } = this.props;
     return (
       <ul className="ImageGallery">
-        <ImageGalleryItem
-          gallery={gallery}
-          getLargeImg={this.props.getLargeImg}
-        />
+        <ImageGalleryItem gallery={gallery} getLargeImg={getLargeImg} />
       </ul>
     );
   }
