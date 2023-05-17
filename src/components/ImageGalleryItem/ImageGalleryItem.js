@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export class ImageGalleryItem extends Component {
   handleImgClick = event => {
@@ -35,3 +36,8 @@ export class ImageGalleryItem extends Component {
     // ));
   }
 }
+
+ImageGalleryItem.propTypes = {
+  gallery: PropTypes.array,
+  getLargeImg: PropTypes.func.isRequired,
+};

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { AiOutlineSearch } from 'react-icons/ai';
+import PropTypes from 'prop-types';
 
 export class Searchbar extends Component {
   state = {
@@ -19,7 +21,9 @@ export class Searchbar extends Component {
       <header className="Searchbar">
         <form className="SearchForm" onSubmit={this.handleSubmit}>
           <button type="submit" className="SearchForm-button">
-            <span className="SearchForm-button-label">Search</span>
+            <span>
+              <AiOutlineSearch fill="black" size="20px" />
+            </span>
           </button>
 
           <input
@@ -36,3 +40,7 @@ export class Searchbar extends Component {
     );
   }
 }
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

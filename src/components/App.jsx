@@ -12,8 +12,10 @@ export class App extends Component  {
     largeImg: '',
     showModal: false,
     isLoading: false,
+    error: false,
+    isHidden: true,
   }
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate = (prevProps, prevState) => {
     if (prevState.value !== this.state.value) this.setState({page: 1})
   }
   handleButtonClick = () => {
@@ -30,20 +32,24 @@ export class App extends Component  {
 this.setState({largeImg: link})
 this.handleShowModalToggle();
   }
-  handleLoading = () => {
-    this.setState(prevState => {
-      return {isLoading: !prevState.isLoading}
-    })
-  }
+  // handleLoading = () => {
+  //   this.setState(prevState => {
+  //     return {isLoading: !prevState.isLoading}
+  //   })
+  // }
+  handleLoading = () => this.setState(({isLoading}) => ({isLoading: !isLoading}))
+  handleGetError = (error) => this.setState({error: error})
+  handleButtonHide = (bool) => this.setState({isHidden: bool})
   render () {
-    const {page, value, largeImg, showModal, isLoading} = this.state;
-    const {handleFormSubmit,handleGetLargeImg,handleLoading,handleButtonClick,handleShowModalToggle} = this
+    const {page, value, largeImg, showModal, isLoading, error, isHidden} = this.state;
+    const {handleFormSubmit,handleGetLargeImg,handleLoading,handleButtonClick,handleShowModalToggle,handleGetError, handleButtonHide} = this
     return (
     <div className="App">
       <Searchbar onSubmit={handleFormSubmit}/>
-      <ImageGallery searchQuery={value} page={page} getLargeImg={handleGetLargeImg} isLoading={handleLoading}/>
+      <ImageGallery searchQuery={value} page={page} getLargeImg={handleGetLargeImg} isLoading={handleLoading} handleGetError={handleGetError} handleButtonHide={handleButtonHide}/>
+      {error && <h2 className="error_message">Something went wrong..</h2>}
       {isLoading && <Loader />}
-      {value && <Button onClick={handleButtonClick}/>}
+      {!isHidden && <Button onClick={handleButtonClick}/>}
       {showModal && <Modal link={largeImg} onKeydown={handleShowModalToggle}/>}
     </div>
   );}

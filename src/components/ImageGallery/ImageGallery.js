@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { getSearchImages } from 'api/SearchImageApi';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 
@@ -6,39 +7,65 @@ export class ImageGallery extends Component {
   state = {
     gallery: [],
     page: 1,
+    error: '',
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    const { searchQuery, page, isLoading } = this.props;
-    if (prevProps.searchQuery !== searchQuery) {
-      this.setState({ gallery: [] });
+  async componentDidUpdate(prevProps) {
+    const { searchQuery, page, isLoading, handleButtonHide, handleGetError } =
+      this.props;
+    try {
+      if (prevProps.searchQuery !== searchQuery) {
+        this.setState({ gallery: [] });
+        handleGetError(false);
+        isLoading();
+        const gallery = await getSearchImages(searchQuery, page);
+        this.setState({ gallery: gallery.hits });
+        this.handlePageUpdate();
+        handleButtonHide(false);
+        if (gallery.hits.length < 12) handleButtonHide(true);
+        if (gallery.hits.length >= 12) handleButtonHide(false);
+        isLoading();
+        if (gallery.hits.length === 0) {
+          handleGetError(true);
+          handleButtonHide(true);
+          return;
+        }
+      }
+      if (prevProps.page !== page) {
+        isLoading();
+        const gallery = await getSearchImages(searchQuery, page);
+        this.setState(prevState => {
+          return { gallery: [...prevState.gallery, ...gallery?.hits] };
+        });
+        this.handlePageUpdate();
+        isLoading();
+      }
+    } catch (error) {
       isLoading();
-      getSearchImages(searchQuery, page)
-        .then(gallery => this.setState({ gallery: gallery.hits }))
-        .finally(() => isLoading());
-      this.handlePageUpdate();
-    }
-    if (prevProps.page !== page) {
-      isLoading();
-      getSearchImages(searchQuery, page)
-        .then(gallery =>
-          this.setState(prevState => {
-            return { gallery: [...prevState.gallery, ...gallery.hits] };
-          })
-        )
-        .finally(() => isLoading());
-      this.handlePageUpdate();
+      if (error) return handleGetError();
     }
   }
+
   handlePageUpdate = () => this.setState({ page: this.props.page });
 
   render() {
     const { gallery } = this.state;
     const { getLargeImg } = this.props;
     return (
-      <ul className="ImageGallery">
-        <ImageGalleryItem gallery={gallery} getLargeImg={getLargeImg} />
-      </ul>
+      <>
+        <ul className="ImageGallery">
+          <ImageGalleryItem gallery={gallery} getLargeImg={getLargeImg} />
+        </ul>
+      </>
     );
   }
 }
+
+ImageGallery.propTypes = {
+  searchQuery: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
+  getLargeImg: PropTypes.func,
+  isLoading: PropTypes.func.isRequired,
+  handleGetError: PropTypes.func.isRequired,
+  handleButtonHide: PropTypes.func.isRequired,
+};
