@@ -7,7 +7,6 @@ import css from '../Styles.module.css';
 export class ImageGallery extends Component {
   state = {
     gallery: [],
-    // page: 1,
     error: '',
   };
 
@@ -44,47 +43,11 @@ export class ImageGallery extends Component {
         isLoading();
         return;
       }
-      // if (prevProps.searchQuery !== searchQuery) {
-      //   this.handlePageUpdate();
-      //   console.log(this.state.page);
-      //   this.setState({ gallery: [] });
-      //   console.log(this.state.page);
-      //   handleGetError(false);
-      //   isLoading();
-      //   const gallery = await getSearchImages(searchQuery, page);
-      //   this.setState({ gallery: gallery.hits });
-      //   // console.log(this.props.page);
-      //   handleButtonHide(false);
-      //   if (gallery.hits.length < 12) {
-      //     handleButtonHide(true);
-      //     handleGetError(false);
-      //   }
-      //   if (gallery.hits.length >= 12) handleButtonHide(false);
-      //   isLoading();
-      //   if (gallery.hits.length === 0) {
-      //     handleGetError(true);
-      //     handleButtonHide(true);
-      //     return;
-      //   }
-      // }
-      // if (prevProps.page < page) {
-      //   isLoading();
-      //   const gallery = await getSearchImages(searchQuery, page);
-      //   this.setState(prevState => {
-      //     return { gallery: [...prevState.gallery, ...gallery?.hits] };
-      //   });
-      //   this.handlePageUpdate();
-      //   // console.log(this.props.page);
-      //   isLoading();
-      //   return;
-      // }
     } catch (error) {
       isLoading();
       if (error) return handleGetError();
     }
   }
-
-  // handlePageUpdate = () => this.setState({ page: this.props.page });
 
   render() {
     const { gallery } = this.state;

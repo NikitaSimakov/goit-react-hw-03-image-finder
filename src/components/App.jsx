@@ -16,11 +16,7 @@ export class App extends Component  {
     error: false,
     isHidden: true,
   }
-  // componentDidUpdate = (prevProps, prevState) => {    
-  //   if (prevState.value !== this.state.value) {
-  //     console.log('prev !== this')
-  //     this.setState({page: 1})}
-  // }
+
   handleButtonClick = () => {
     this.setState(prevState => {
       return {page: prevState.page + 1}
