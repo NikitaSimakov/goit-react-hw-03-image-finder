@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getSearchImages } from 'api/SearchImageApi';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
+import css from '../Styles.module.css';
 
 export class ImageGallery extends Component {
   state = {
@@ -53,7 +54,7 @@ export class ImageGallery extends Component {
     const { getLargeImg } = this.props;
     return (
       <>
-        <ul className="ImageGallery">
+        <ul className={css.ImageGallery}>
           <ImageGalleryItem gallery={gallery} getLargeImg={getLargeImg} />
         </ul>
       </>

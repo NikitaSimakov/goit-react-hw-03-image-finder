@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import css from '../Styles.module.css';
 
 export class ImageGalleryItem extends Component {
   handleImgClick = event => {
@@ -10,30 +11,19 @@ export class ImageGalleryItem extends Component {
     const { gallery, getLargeImg } = this.props;
     return gallery?.map(({ id, largeImageURL, webformatURL, tags }) => (
       <li
-        className="ImageGalleryItem"
+        className={css.ImageGalleryItem}
         key={id}
         onClick={() => {
           getLargeImg(largeImageURL);
         }}
       >
-        <img src={webformatURL} alt={tags} className="ImageGalleryItem-image" />
+        <img
+          src={webformatURL}
+          alt={tags}
+          className={css.ImageGalleryItem_image}
+        />
       </li>
     ));
-    // return gallery?.map(item => (
-    //   <li
-    //     className="ImageGalleryItem"
-    //     key={item.id}
-    //     onClick={() => {
-    //       getLargeImg(item.largeImageURL);
-    //     }}
-    //   >
-    //     <img
-    //       src={item.webformatURL}
-    //       alt={item.tags}
-    //       className="ImageGalleryItem-image"
-    //     />
-    //   </li>
-    // ));
   }
 }
 
