@@ -16,16 +16,17 @@ export class App extends Component  {
     error: false,
     isHidden: true,
   }
-  componentDidUpdate = (prevProps, prevState) => {
-    if (prevState.value !== this.state.value) this.setState({page: 1})
-  }
+  // componentDidUpdate = (prevProps, prevState) => {    
+  //   if (prevState.value !== this.state.value) {
+  //     console.log('prev !== this')
+  //     this.setState({page: 1})}
+  // }
   handleButtonClick = () => {
     this.setState(prevState => {
       return {page: prevState.page + 1}
-    })
+    })};
 
-  }
-  handleFormSubmit = (value) => this.setState({value})
+  handleFormSubmit = (value) => this.setState({value, page: 1})
 
   handleShowModalToggle = () => this.setState(({showModal}) => ({showModal: !showModal}))
   
