@@ -22,6 +22,7 @@ export class ImageGallery extends Component {
         const gallery = await getSearchImages(searchQuery, page);
         this.setState({ gallery: gallery.hits });
         this.handlePageUpdate();
+        console.log(this.props.page);
         handleButtonHide(false);
         if (gallery.hits.length < 12) {
           handleButtonHide(true);
@@ -35,13 +36,14 @@ export class ImageGallery extends Component {
           return;
         }
       }
-      if (prevProps.page !== page) {
+      if (prevProps.page < page) {
         isLoading();
         const gallery = await getSearchImages(searchQuery, page);
         this.setState(prevState => {
           return { gallery: [...prevState.gallery, ...gallery?.hits] };
         });
         this.handlePageUpdate();
+        console.log(this.props.page);
         isLoading();
       }
     } catch (error) {
