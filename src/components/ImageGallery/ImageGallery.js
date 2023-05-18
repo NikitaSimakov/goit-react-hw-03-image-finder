@@ -23,7 +23,10 @@ export class ImageGallery extends Component {
         this.setState({ gallery: gallery.hits });
         this.handlePageUpdate();
         handleButtonHide(false);
-        if (gallery.hits.length < 12) handleButtonHide(true);
+        if (gallery.hits.length < 12) {
+          handleButtonHide(true);
+          handleGetError(false);
+        }
         if (gallery.hits.length >= 12) handleButtonHide(false);
         isLoading();
         if (gallery.hits.length === 0) {
