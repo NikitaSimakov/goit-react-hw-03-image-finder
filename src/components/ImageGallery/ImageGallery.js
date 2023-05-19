@@ -13,6 +13,7 @@ export class ImageGallery extends Component {
   async componentDidUpdate(prevProps) {
     const { searchQuery, page, isLoading, handleButtonHide, handleGetError } =
       this.props;
+
     try {
       if (prevProps.searchQuery !== searchQuery) {
         this.setState({ gallery: [] });
